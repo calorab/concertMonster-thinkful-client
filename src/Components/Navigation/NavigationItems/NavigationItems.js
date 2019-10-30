@@ -7,7 +7,8 @@ const navigationItems = (props) => (
 // I want to make the navItems be different based on if the user is logged in or not
     <ul>
         <NavItem
-            className={classes.NavigationItems}>
+            className={classes.NavigationItems}
+            link='/auth'>
             GET STARTED
         </NavItem>
     </ul>

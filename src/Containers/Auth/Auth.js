@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
+import Spinner from '../../Components/UI/Spinner/Spinner';
 
 import classes from './Auth.module.css';
 
@@ -36,7 +37,8 @@ class Login extends Component {
                 valid: false,
                 touched: false
             }
-        }
+        },
+        loading: false
     }
 
     onLoginhandler = () => {
@@ -63,7 +65,11 @@ class Login extends Component {
                         touched={formElement.config.touched} />
             ))}
                 <Button btnType='Success' >LOGIN</Button>
-            </form>;
+        </form>;
+
+        if (this.state.loading) {
+            form = <Spinner />;
+        }
 
         return (
             <div className={classes.Auth}>
