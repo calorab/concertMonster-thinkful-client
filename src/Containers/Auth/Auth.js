@@ -39,6 +39,10 @@ class Login extends Component {
         }
     }
 
+    onLoginhandler = () => {
+        this.props.history.push('/dashboard');
+    }
+
     render() {
         let formElementsArray = [];
         for (let element in this.state.controls) {
@@ -48,22 +52,22 @@ class Login extends Component {
             });
         }
 
-        let form = formElementsArray.map(formElement => (
-            <Input
-                key={formElement.id}
-                elementConfig={formElement.config.elementConfig}
-                value={formElement.config.value}
-                invalid={!formElement.config.valid}
-                shouldValidate={formElement.config.validation}
-                touched={formElement.config.touched} />
-        ));
+        let form = <form onSubmit={this.onLoginhandler}> {
+                formElementsArray.map(formElement => (
+                    <Input
+                        key={formElement.id}
+                        elementConfig={formElement.config.elementConfig}
+                        value={formElement.config.value}
+                        invalid={!formElement.config.valid}
+                        shouldValidate={formElement.config.validation}
+                        touched={formElement.config.touched} />
+            ))}
+                <Button btnType='Success' >LOGIN</Button>
+            </form>;
 
         return (
             <div className={classes.Auth}>
-                <form>
-                    {form}
-                </form>
-                <Button btnType='Success'>LOGIN</Button>
+                {form}
             </div>
         );
     };
