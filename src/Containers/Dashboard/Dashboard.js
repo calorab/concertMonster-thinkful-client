@@ -1,9 +1,13 @@
 import React from 'react';
+import SearchArtists from '../SearchArtists/SearchArtists';
+const dashboard = (props) => {
 
-const dashboard = () => (
-    <div>
-        <p>You're on the dashboard</p>
-    </div>
-);
+    return (
+        <div>
+            <SearchArtists />
+            <p>You're on the dashboard</p>
+        </div>
+    );
+};
 
 export default dashboard;
