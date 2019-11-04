@@ -7,12 +7,16 @@ import Backdrop from '../../UI/Backdrop/Backdrop';
 import Aux from '../../../Containers/hoc/Aux/Aux';
 
 const sideDrawer = (props) => {
+
+    let attachedClasses = [classes.SideDrawer, classes.Close]
+    if (props.open) {
+        attachedClasses = [classes.SideDrawer, classes.open]
+    }
+
     return (
-        // for mobile only - will use Toolbar for desktop
-        // add backdrop to shade out window when open
         <Aux>
-            <Backdrop clicked={props.backdropClicked}/>
-            <div className={classes.SideDrawer}>
+            <Backdrop show={props.open} clicked={props.close}/>
+            <div className={attachedClasses.join(' ')} clicked={props.close}>
                 <div className={classes.Logo}>
                     <Logo />
                 </div>

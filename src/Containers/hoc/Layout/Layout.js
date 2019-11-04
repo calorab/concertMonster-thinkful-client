@@ -5,12 +5,29 @@ import Toolbar from '../../../Components/Navigation/Toolbar/Toolbar';
 import SideDrawer from '../../../Components/Navigation/SideDrawer/SideDrawer';
 
 class Layout extends Component {
+    state = {
+        sideDrawerOpen: false
+    }
+
+    sideDrawerClosehandler = () => {
+        this.setState({sideDrawerOpen: false});
+    }
+
+    drawerToggleHandler = () => {
+        this.setState((prevState) => {
+            return {sideDrawerOpen: !prevState.sideDrawerOpen};
+        })
+    }
+
     render(props) {
         return (
             // Should replace <div> with <aux> to allow multiple components/elements
             <div>
-                <Toolbar />
-                <SideDrawer />
+                <Toolbar
+                    drawerToggleClicked={this.drawerToggleHandler} />
+                <SideDrawer
+                    close={this.sideDrawerClosehandler}
+                    open={this.state.sideDrawerOpen} />
                 <main className={classes.Content}>
                     {this.props.children}
                 </main>
