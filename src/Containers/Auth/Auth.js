@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
 import Spinner from '../../Components/UI/Spinner/Spinner';
+import axios from '../../axios-instance';
 
 import classes from './Auth.module.css';
 
@@ -38,12 +39,27 @@ class Login extends Component {
                 touched: false
             }
         },
-        loading: false
+        loading: false,
+        isSignup: false
     }
+//CALEB - working here when you left off - not done with Axios call
+    onAuthHandler = () => {
+        let apiEndpoint = '/auth/login';
+        if (this.state.isSignup) {
+            apiEndpoint = '/auth/signup'
+        }
+        axios.post(apiEndpoint,);
+    };
 
     onLoginhandler = () => {
         this.props.history.push('/dashboard');
     }
+
+    switchAuthModeHandler = () => {
+        this.setState(prevState => {
+            return {isSignup: !prevState.isSignup}
+        });
+    };
 
     render() {
         let formElementsArray = [];
@@ -64,7 +80,15 @@ class Login extends Component {
                         shouldValidate={formElement.config.validation}
                         touched={formElement.config.touched} />
             ))}
-                <Button btnType='Success' >LOGIN</Button>
+                
+                <Button btnType='Danger' 
+                    onClick={this.switchAuthModeHandler}>
+                    {this.state.isSignup ? 'LOGIN ' : 'SIGNUP '}INSTEAD?
+                </Button>
+                <Button btnType='Success' 
+                    onClick={this.authHandler}>
+                    {this.state.isSignup ? 'SIGNUP' : 'LOGIN'}
+                </Button>
         </form>;
 
         if (this.state.loading) {
@@ -73,6 +97,7 @@ class Login extends Component {
 
         return (
             <div className={classes.Auth}>
+                {this.state.isSignup ? <h3>Signup</h3> : <h3>Login</h3>}
                 {form}
             </div>
         );
