@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
 import Spinner from '../../Components/UI/Spinner/Spinner';
-// import axios from '../../axios-instance';
 import axios from 'axios';
 
 import classes from './Auth.module.css';
@@ -49,19 +48,23 @@ class Login extends Component {
         if (this.state.isSignup) {
             apiEndpoint = 'http://localhost:8080/auth/signup'
         }
-        const authData = {
-            email: 'test@test.com', 
-            password: '12345'
-        };
-        axios.post(apiEndpoint, authData)
+        axios({
+            method: 'post',
+            url: apiEndpoint,
+            data: {
+                email: 'test@test.com', 
+                password: '12345'
+            }
+        })
         .then(response => {
             alert(response);
-            this.props.history.push('/dashboard');
+            // this.props.history.push('/dashboard');
         })
         .catch(err => {
             alert(err);
         });
     };
+// I'm getting the following error: [HMR] Waiting for update signal from WDS...
 
     switchAuthModeHandler = () => {
         console.log('state switched');
