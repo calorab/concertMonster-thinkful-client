@@ -26,7 +26,7 @@ class SearchArtists extends Component {
 
         let searchForm =
             <form className={classes.SearchArtists} onSubmit={this.submitHandler}>
-                <Input value='Alison Wonderland'/>
+                <Input defaultValue='Alison Wonderland'/>
                 <Button btnType="Success" >SEARCH</Button>
             </form>
         ;

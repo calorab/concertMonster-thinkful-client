@@ -12,7 +12,7 @@ const input = (props) => {
             <input
                 className={classes.InputElement}
                 {...props.elementConfig}
-                value={props.value}
+                defaultValue={props.value}
                 onChange={props.changed} />
         </div>
     );

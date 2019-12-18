@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
 import Spinner from '../../Components/UI/Spinner/Spinner';
-import axios from '../../axios-instance';
+// import axios from '../../axios-instance';
+import axios from 'axios';
 
 import classes from './Auth.module.css';
 
@@ -43,19 +44,27 @@ class Login extends Component {
         isSignup: false
     }
 //CALEB - working here when you left off - not done with Axios call
-    onAuthHandler = () => {
-        let apiEndpoint = '/auth/login';
+    onAuthHandler = () => {      
+        let apiEndpoint = 'http://localhost:8080/auth/login';
         if (this.state.isSignup) {
-            apiEndpoint = '/auth/signup'
+            apiEndpoint = 'http://localhost:8080/auth/signup'
         }
-        axios.post(apiEndpoint,);
+        const authData = {
+            email: 'test@test.com', 
+            password: '12345'
+        };
+        axios.post(apiEndpoint, authData)
+        .then(response => {
+            alert(response);
+            this.props.history.push('/dashboard');
+        })
+        .catch(err => {
+            alert(err);
+        });
     };
 
-    onLoginhandler = () => {
-        this.props.history.push('/dashboard');
-    }
-
     switchAuthModeHandler = () => {
+        console.log('state switched');
         this.setState(prevState => {
             return {isSignup: !prevState.isSignup}
         });
@@ -70,26 +79,16 @@ class Login extends Component {
             });
         }
 
-        let form = <form onSubmit={this.onLoginhandler}> {
-                formElementsArray.map(formElement => (
-                    <Input
-                        key={formElement.id}
-                        elementConfig={formElement.config.elementConfig}
-                        value={formElement.config.value}
-                        invalid={!formElement.config.valid}
-                        shouldValidate={formElement.config.validation}
-                        touched={formElement.config.touched} />
-            ))}
-                
-                <Button btnType='Danger' 
-                    onClick={this.switchAuthModeHandler}>
-                    {this.state.isSignup ? 'LOGIN ' : 'SIGNUP '}INSTEAD?
-                </Button>
-                <Button btnType='Success' 
-                    onClick={this.authHandler}>
-                    {this.state.isSignup ? 'SIGNUP' : 'LOGIN'}
-                </Button>
-        </form>;
+        let form = formElementsArray.map(formElement => (
+            <Input
+                key={formElement.id}
+                elementConfig={formElement.config.elementConfig}
+                defaultValue={formElement.config.value}
+                invalid={!formElement.config.valid}
+                shouldValidate={formElement.config.validation}
+                touched={formElement.config.touched} 
+            />
+        ));
 
         if (this.state.loading) {
             form = <Spinner />;
@@ -98,7 +97,16 @@ class Login extends Component {
         return (
             <div className={classes.Auth}>
                 {this.state.isSignup ? <h3>Signup</h3> : <h3>Login</h3>}
-                {form}
+                <form >
+                    {form}
+                    <Button btnType='Success' clicked={this.onAuthHandler}>
+                        {this.state.isSignup ? 'SIGNUP' : 'LOGIN'}
+                    </Button>
+                </form>
+                <Button btnType='Danger' 
+                    clicked={this.switchAuthModeHandler}>
+                    {this.state.isSignup ? 'LOGIN ' : 'SIGNUP '}INSTEAD?
+                </Button>
             </div>
         );
     };
