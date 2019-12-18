@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
 import Spinner from '../../Components/UI/Spinner/Spinner';
-import axios from 'axios';
+
 
 import classes from './Auth.module.css';
 
@@ -43,28 +43,33 @@ class Login extends Component {
         isSignup: false
     }
 //CALEB - working here when you left off - not done with Axios call
-    onAuthHandler = () => {      
+    onAuthHandler = (event) => {      
+        event.preventDefault();
         let apiEndpoint = 'http://localhost:8080/auth/login';
         if (this.state.isSignup) {
             apiEndpoint = 'http://localhost:8080/auth/signup'
         }
-        axios({
+        fetch(apiEndpoint, {
             method: 'post',
-            url: apiEndpoint,
-            data: {
-                email: 'test@test.com', 
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify({
+                email: 'test1@test.com', 
                 password: '12345'
-            }
+            })
         })
         .then(response => {
-            alert(response);
+            return response.json();
             // this.props.history.push('/dashboard');
         })
+        .then(data => {
+            console.log(data);
+        })
         .catch(err => {
-            alert(err);
+            console.log(err);
         });
     };
-// I'm getting the following error: [HMR] Waiting for update signal from WDS...
 
     switchAuthModeHandler = () => {
         console.log('state switched');
