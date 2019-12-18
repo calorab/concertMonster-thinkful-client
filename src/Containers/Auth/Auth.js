@@ -49,6 +49,7 @@ class Login extends Component {
         if (this.state.isSignup) {
             apiEndpoint = 'http://localhost:8080/auth/signup'
         }
+        
         fetch(apiEndpoint, {
             method: 'post',
             headers: {
@@ -61,10 +62,10 @@ class Login extends Component {
         })
         .then(response => {
             return response.json();
-            // this.props.history.push('/dashboard');
         })
         .then(data => {
-            console.log(data);
+            console.log('DATA', data);
+            this.props.history.push('/dashboard');
         })
         .catch(err => {
             console.log(err);

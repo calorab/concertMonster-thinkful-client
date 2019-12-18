@@ -6,6 +6,7 @@ import Input from '../../Components/UI/Input/Input';
 import Spinner from '../../Components/UI/Spinner/Spinner';
 
 import SearchResults from '../SearchResults/SearchResults';
+import axios from 'axios';
 
 
 class SearchArtists extends Component {
@@ -16,10 +17,20 @@ class SearchArtists extends Component {
 
     submitHandler = () => {
         this.setState({loading: true});
+        let url = 'http://localhost:8080/search/artists';
 
-        const changeState = () => this.setState({loading: false});
-        setTimeout(changeState, 2000);
-    }
+        axios({
+            method: 'get',
+            url: url,
+            data: {
+                artist: 'dermot kennedy'
+            }
+        })
+        .then(response => {
+            console.log(response);
+        })
+        .catch(err => console.log(err));
+    };
 
 
     render() {
@@ -27,7 +38,7 @@ class SearchArtists extends Component {
         let searchForm =
             <form className={classes.SearchArtists} onSubmit={this.submitHandler}>
                 <Input defaultValue='Alison Wonderland'/>
-                <Button btnType="Success" >SEARCH</Button>
+                <Button btnType="Success">SEARCH</Button>
             </form>
         ;
 
