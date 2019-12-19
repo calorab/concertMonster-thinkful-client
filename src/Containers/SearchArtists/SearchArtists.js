@@ -17,19 +17,17 @@ class SearchArtists extends Component {
 
     submitHandler = () => {
         this.setState({loading: true});
-        let url = 'http://localhost:8080/search/artists';
-
-        axios({
-            method: 'get',
-            url: url,
-            data: {
-                artist: 'dermot kennedy'
-            }
+        const artist = 'dermot kennedy';
+        const url = 'http://localhost:8080/search/artists/' + encodeURIComponent(artist);
+        console.log(url);
+        axios.request({
+                method: 'get',
+                url: url
         })
         .then(response => {
             console.log(response);
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(err.response));
     };
 
 
