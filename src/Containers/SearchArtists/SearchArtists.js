@@ -39,7 +39,9 @@ class SearchArtists extends Component {
         });
     };
 
-
+    onAddArtist = () => {
+        alert('You clicked a button!!');
+    };
     render() {
 
         let searchForm =
@@ -54,7 +56,7 @@ class SearchArtists extends Component {
         }
         let searchResultsArray = []
         for (const searchElement of this.state.artists) {
-            console.log(searchElement);
+            console.log(searchElement.id);
             searchResultsArray.push({
                 id: searchElement.id,
                 data: searchElement
@@ -71,7 +73,8 @@ class SearchArtists extends Component {
         searchResults = searchResultsArray.map(element => {
                 return <SearchResultItem 
                     key={element.data.id}
-                    link={element.data.uri}>
+                    link={element.data.uri}
+                    btnClicked={this.onAddArtist}>
                     {element.data.displayName}
                 </SearchResultItem>
             });

@@ -5,7 +5,7 @@ import Button from '../UI/Button/Button';
 const searchItem = props => (
     <div>
         <h3>{props.children}</h3>
-        <Button btnType='Success' clicked={props.btnClick}>Save to My Artists!</Button>
+        <Button btnType='Success' clicked={props.btnClicked}>Save to My Artists!</Button>
         <Button btnType='Success' clicked={props.link}>Check them out on Songkick!</Button>
     </div>
 );
