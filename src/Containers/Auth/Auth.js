@@ -82,6 +82,7 @@ class Login extends Component {
     render() {
         let formElementsArray = [];
         for (let element in this.state.controls) {
+            console.log(element);
             formElementsArray.push({
                 id: element,
                 config: this.state.controls[element]
@@ -98,6 +99,7 @@ class Login extends Component {
                 touched={formElement.config.touched} 
             />
         ));
+
 
         if (this.state.loading) {
             form = <Spinner />;
