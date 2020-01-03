@@ -12,8 +12,9 @@ const input = (props) => {
             <input
                 className={classes.InputElement}
                 {...props.elementConfig}
-                defaultValue={props.value}
-                onChange={props.changed} />
+                placeholder={props.startValue}
+                onChange={props.changed} 
+                name={props.inputName}/>
         </div>
     );
 }

@@ -17,11 +17,11 @@ class SearchArtists extends Component {
         artists: [],
     }
 
-    submitHandler = () => {
+    submitHandler = (event) => {
         this.setState({loading: true});
-        const artist = 'billie';
+        const artist = event.target.search.value;
         const url = 'http://localhost:8080/search/artists/' + encodeURIComponent(artist);
-        console.log(url);
+        console.log('URL and Artist:', url, artist);
         axios.request({
                 method: 'get',
                 url: url
@@ -35,39 +35,42 @@ class SearchArtists extends Component {
         .then(data => console.log('This is the state:', this.state.artists))
         .catch(err => {
             console.log(err);
-            this.setState({error: err});
+            this.setState({
+                loading: false,
+                error: err
+            });
         });
     };
 
     onAddArtist = () => {
         alert('You clicked a button!!');
     };
+    
     render() {
 
         let searchForm =
-            <form className={classes.SearchArtists} onSubmit={this.submitHandler}>
-                <Input defaultValue='Alison Wonderland'/>
+            <form className={classes.SearchArtists} onSubmit={(event) => this.submitHandler(event)}>
+                <Input startValue='Search Artist' inputName='search'/>
                 <Button btnType="Success">SEARCH</Button>
             </form>
         ;
 
-        if (this.state.loading) {
-            searchForm = <Spinner />;
-        }
         let searchResultsArray = []
         for (const searchElement of this.state.artists) {
-            console.log(searchElement.id);
             searchResultsArray.push({
                 id: searchElement.id,
                 data: searchElement
             });
         };
-        let searchResults;
 
         if (this.state.loading) {
-            searchResults = <h4>Getting your results...</h4>;
-        } else if (this.state.error) {
-            searchResults = <h5>There was a problem getting your results. Try searching for a different artist</h5>;
+            searchForm = <Spinner />;
+            searchResultsArray = [];
+        }
+
+        let searchResults;
+        if (this.state.error) {
+            searchResults = <h5>There was a problem getting your results. Please refresh the page and try again.</h5>;
         }
 
         searchResults = searchResultsArray.map(element => {
