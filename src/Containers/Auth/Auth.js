@@ -3,8 +3,10 @@ import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
 import Spinner from '../../Components/UI/Spinner/Spinner';
 import {updateObject, checkValidity} from '../../Utility/utility';
+import Aux from '../../Containers/hoc/Aux/Aux';
 
 import classes from './Auth.module.css';
+import Modal from '../../Components/UI/Modal/modal';
 
 class Login extends Component {
 
@@ -40,7 +42,8 @@ class Login extends Component {
             }
         },
         loading: false,
-        isSignup: false
+        isSignup: false,
+        error: false
     }
 
     inputChangedHandler = (event, controlName) => {
@@ -73,16 +76,17 @@ class Login extends Component {
             })
         })
         .then(response => {
-            if (response.status === 200) {
-                return response.json();
-            }
-            alert('email or password is incorrect'); 
-            throw console.error();
-                      
+            console.log('RESPONSE', response);
+            if (response.status !== 200) {
+                this.setState({error: true});
+                console.log(this.state.error);
+            }        
+            return response.json();
             // add in modal or error display ----- ASK ABOUT BETTER WAY TO DO THE ABOVE
         })
         .then(data => {
             console.log('DATA', data);
+            
             this.props.history.push('/dashboard');
         })
         .catch(err => {
@@ -96,6 +100,10 @@ class Login extends Component {
             return {isSignup: !prevState.isSignup}
         });
     };
+
+    onModalClosed = () => {
+        this.setState({error: false});
+    }
 
     render() {
         let formElementsArray = [];
@@ -126,7 +134,7 @@ class Login extends Component {
         }
 
         return (
-            <div className={classes.Auth}>
+            <Aux className={classes.Auth}>
                 {this.state.isSignup ? <h3>Signup</h3> : <h3>Login</h3>}
                 <form >
                     {form}
@@ -134,11 +142,16 @@ class Login extends Component {
                         {this.state.isSignup ? 'SIGNUP' : 'LOGIN'}
                     </Button>
                 </form>
+                <Modal 
+                    show={this.state.error} 
+                    modalClosed={this.onModalClosed}>
+                    The email/password combo is incorrect
+                </Modal>
                 <Button btnType='Danger' 
                     clicked={this.switchAuthModeHandler}>
                     {this.state.isSignup ? 'LOGIN ' : 'SIGNUP '}INSTEAD?
                 </Button>
-            </div>
+            </Aux>
         );
     };
 }

@@ -7,12 +7,13 @@ import Spinner from '../../Components/UI/Spinner/Spinner';
 
 import SearchResultItem from '../../Components/SearchResultItem/SearchResultItem';
 import axios from 'axios';
+import Modal from '../../Components/UI/Modal/modal';
 
 
 class SearchArtists extends Component {
 
     state = {
-        error: null,
+        error: false,
         loading: false,
         artists: []
     }
@@ -70,10 +71,6 @@ class SearchArtists extends Component {
             console.log(err);
         });
     };
-
-    onFollowLink = () => {
-
-    }
     
     render() {
 
@@ -114,7 +111,7 @@ class SearchArtists extends Component {
 
         return (
             <div>
-                <h1>Search for Artists Below</h1>
+                <h3>Search for Artists Below</h3>
                 {searchForm}
                 {searchResults}
             </div>
