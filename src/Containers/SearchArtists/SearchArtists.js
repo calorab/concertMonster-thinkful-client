@@ -44,6 +44,28 @@ class SearchArtists extends Component {
 
     onAddArtist = () => {
         alert('You clicked a button!!');
+        // let apiEndpoint = 'http://localhost:8080/followedartists/myartist';
+        
+        // fetch(apiEndpoint, {
+        //     method: 'post',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //       },
+        //     body: JSON.stringify({
+        //         email: 'test1@test.com', 
+        //         password: '12345'
+        //     })
+        // })
+        // .then(response => {
+        //     return response.json();
+        // })
+        // .then(data => {
+        //     console.log('DATA', data);
+        //     this.props.history.push('/dashboard');
+        // })
+        // .catch(err => {
+        //     console.log(err);
+        // });
     };
     
     render() {

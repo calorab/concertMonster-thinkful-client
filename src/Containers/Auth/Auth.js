@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
 import Spinner from '../../Components/UI/Spinner/Spinner';
-
+import {updateObject, checkValidity} from '../../Utility/utility';
 
 import classes from './Auth.module.css';
 
@@ -42,6 +42,18 @@ class Login extends Component {
         loading: false,
         isSignup: false
     }
+
+    inputChangedHandler = (event, controlName) => {
+        const updatedControls = updateObject(this.state.controls, {
+            [controlName]: updateObject(this.state.controls[controlName], {
+                value: event.target.value
+            })
+        });
+        this.setState({controls: updatedControls});
+    }
+    // for above once checkin validity --: valid: checkValidity(event.target.value, 
+    // this.state.controls[controlName].validation), touched: true
+
 //CALEB - working here when you left off - not done with Axios call
     onAuthHandler = (event) => {      
         event.preventDefault();
@@ -56,8 +68,8 @@ class Login extends Component {
                 'Content-Type': 'application/json'
               },
             body: JSON.stringify({
-                email: 'test1@test.com', 
-                password: '12345'
+                email: this.state.controls.email.value, 
+                password: this.state.controls.password.value
             })
         })
         .then(response => {
@@ -65,7 +77,12 @@ class Login extends Component {
         })
         .then(data => {
             console.log('DATA', data);
-            this.props.history.push('/dashboard');
+            if (data.token) {
+                this.props.history.push('/dashboard');
+            }
+            alert('email or password is incorrect');
+            
+            // add in modal or error display
         })
         .catch(err => {
             console.log(err);
@@ -82,7 +99,6 @@ class Login extends Component {
     render() {
         let formElementsArray = [];
         for (let element in this.state.controls) {
-            console.log(element);
             formElementsArray.push({
                 id: element,
                 config: this.state.controls[element]
@@ -98,6 +114,8 @@ class Login extends Component {
                 invalid={!formElement.config.valid}
                 shouldValidate={formElement.config.validation}
                 touched={formElement.config.touched} 
+                inputName={formElement.config.elementConfig.type}
+                changed={(event) => this.inputChangedHandler(event, formElement.id)}
             />
         ));
 
