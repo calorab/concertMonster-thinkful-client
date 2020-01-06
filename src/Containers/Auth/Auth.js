@@ -73,16 +73,17 @@ class Login extends Component {
             })
         })
         .then(response => {
-            return response.json();
+            if (response.status === 200) {
+                return response.json();
+            }
+            alert('email or password is incorrect'); 
+            throw console.error();
+                      
+            // add in modal or error display ----- ASK ABOUT BETTER WAY TO DO THE ABOVE
         })
         .then(data => {
             console.log('DATA', data);
-            if (data.token) {
-                this.props.history.push('/dashboard');
-            }
-            alert('email or password is incorrect');
-            
-            // add in modal or error display
+            this.props.history.push('/dashboard');
         })
         .catch(err => {
             console.log(err);

@@ -14,7 +14,7 @@ class SearchArtists extends Component {
     state = {
         error: null,
         loading: false,
-        artists: [],
+        artists: []
     }
 
     submitHandler = (event) => {
@@ -32,7 +32,7 @@ class SearchArtists extends Component {
                 artists: response.data.results.artist
             });
         })
-        .then(data => console.log('This is the state:', this.state.artists))
+        .then(data => console.log('This is the artist state:', this.state.artists))
         .catch(err => {
             console.log(err);
             this.setState({
@@ -42,31 +42,38 @@ class SearchArtists extends Component {
         });
     };
 
-    onAddArtist = () => {
-        alert('You clicked a button!!');
-        // let apiEndpoint = 'http://localhost:8080/followedartists/myartist';
+    onAddArtist = (event, artistId) => {
+        // event.preventDefault();
+        // alert('You clicked a button!!');
+        let apiEndpoint = 'http://localhost:8080/followedartists/myartist';
         
-        // fetch(apiEndpoint, {
-        //     method: 'post',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //       },
-        //     body: JSON.stringify({
-        //         email: 'test1@test.com', 
-        //         password: '12345'
-        //     })
-        // })
-        // .then(response => {
-        //     return response.json();
-        // })
-        // .then(data => {
-        //     console.log('DATA', data);
-        //     this.props.history.push('/dashboard');
-        // })
-        // .catch(err => {
-        //     console.log(err);
-        // });
+        fetch(apiEndpoint, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify({
+                name: this.state.artists[artistId].displayName, 
+                tour: this.state.artists[artistId].onTourUntil,
+                url: this.state.artists[artistId].uri
+            })
+        })
+        .then(response => {
+            console.log('RESPONSE', response);
+            return response.json();
+        })
+        .then(data => {
+            console.log('DATA', data);
+            alert('FOLLOWED!!');
+        })
+        .catch(err => {
+            console.log(err);
+        });
     };
+
+    onFollowLink = () => {
+
+    }
     
     render() {
 
@@ -77,12 +84,13 @@ class SearchArtists extends Component {
             </form>
         ;
 
-        let searchResultsArray = []
+        let searchResultsArray = [];
         for (const searchElement of this.state.artists) {
             searchResultsArray.push({
                 id: searchElement.id,
                 data: searchElement
             });
+
         };
 
         if (this.state.loading) {
@@ -99,7 +107,7 @@ class SearchArtists extends Component {
                 return <SearchResultItem 
                     key={element.data.id}
                     link={element.data.uri}
-                    btnClicked={this.onAddArtist}>
+                    btnClicked={event => this.onAddArtist(event, element.id)}>
                     {element.data.displayName}
                 </SearchResultItem>
             });
