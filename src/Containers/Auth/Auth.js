@@ -93,6 +93,7 @@ class Login extends Component {
             <Input
                 key={formElement.id}
                 elementConfig={formElement.config.elementConfig}
+                startValue={formElement.config.elementConfig.type}
                 defaultValue={formElement.config.value}
                 invalid={!formElement.config.valid}
                 shouldValidate={formElement.config.validation}
