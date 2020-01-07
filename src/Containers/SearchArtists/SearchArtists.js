@@ -4,10 +4,11 @@ import classes from './SearchArtists.module.css';
 import Button from '../../Components/UI/Button/Button';
 import Input from '../../Components/UI/Input/Input';
 import Spinner from '../../Components/UI/Spinner/Spinner';
+import BackToTopButton from '../../Components/UI/BackToTopButton/backToTopButton';
 
 import SearchResultItem from '../../Components/SearchResultItem/SearchResultItem';
 import axios from 'axios';
-import Modal from '../../Components/UI/Modal/modal';
+
 
 
 class SearchArtists extends Component {
@@ -47,16 +48,16 @@ class SearchArtists extends Component {
         // event.preventDefault();
         // alert('You clicked a button!!');
         let apiEndpoint = 'http://localhost:8080/followedartists/myartist';
-        console.log(artist);
+        console.log(artist.data.displayName);
         fetch(apiEndpoint, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
               },
             body: JSON.stringify({
-                // name: this.state.artists[artistElement].displayName, 
-                // tour: this.state.artists[artistElement].onTourUntil,
-                // url: this.state.artists[artistElement].uri
+                name: artist.data.displayName, 
+                tour: artist.data.onTourUntil,
+                url: artist.data.uri
             })
         })
         .then(response => {
@@ -78,6 +79,7 @@ class SearchArtists extends Component {
             <form className={classes.SearchArtists} onSubmit={(event) => this.submitHandler(event)}>
                 <Input startValue='Search Artist' inputName='search'/>
                 <Button btnType="Success">SEARCH</Button>
+                
             </form>
         ;
 
@@ -114,6 +116,7 @@ class SearchArtists extends Component {
                 <h3>Search for Artists Below</h3>
                 {searchForm}
                 {searchResults}
+                <BackToTopButton clicked={() => window.scrollTo(0,0)} />
             </div>
         );
     }

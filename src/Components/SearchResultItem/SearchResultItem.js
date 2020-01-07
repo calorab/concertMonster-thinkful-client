@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from '../UI/Button/Button';
-import {NavLink} from 'react-router-dom';
 
 // add inline styling for Songkick button
 const searchItem = props => (

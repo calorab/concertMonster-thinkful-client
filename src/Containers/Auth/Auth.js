@@ -84,7 +84,7 @@ class Login extends Component {
                 this.props.history.push('/dashboard');
             }
             
-            // add in modal or error display ----- ASK ABOUT BETTER WAY TO DO THE ABOVE
+            // important tag
         })
         .catch(err => {
             console.log(err);
@@ -131,14 +131,16 @@ class Login extends Component {
         }
 
         return (
-            <Aux className={classes.Auth}>
-                {this.state.isSignup ? <h3>Signup</h3> : <h3>Login</h3>}
-                <form >
-                    {form}
-                    <Button btnType='Success' clicked={this.onAuthHandler}>
-                        {this.state.isSignup ? 'SIGNUP' : 'LOGIN'}
-                    </Button>
-                </form>
+            <Aux >
+                <div className={classes.Auth}>
+                    {this.state.isSignup ? <h3>Signup</h3> : <h3>Login</h3>}
+                    <form >
+                        {form}
+                        <Button btnType='Success' clicked={this.onAuthHandler}>
+                            {this.state.isSignup ? 'SIGNUP' : 'LOGIN'}
+                        </Button>
+                    </form>
+                </div>
                 <Modal 
                     show={this.state.error} 
                     modalClosed={this.onModalClosed}>
