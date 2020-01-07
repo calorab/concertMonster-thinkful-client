@@ -43,20 +43,20 @@ class SearchArtists extends Component {
         });
     };
 
-    onAddArtist = (event, artistId) => {
+    onAddArtist = (event, artist) => {
         // event.preventDefault();
         // alert('You clicked a button!!');
         let apiEndpoint = 'http://localhost:8080/followedartists/myartist';
-        
+        console.log(artist);
         fetch(apiEndpoint, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
               },
             body: JSON.stringify({
-                name: this.state.artists[artistId].displayName, 
-                tour: this.state.artists[artistId].onTourUntil,
-                url: this.state.artists[artistId].uri
+                // name: this.state.artists[artistElement].displayName, 
+                // tour: this.state.artists[artistElement].onTourUntil,
+                // url: this.state.artists[artistElement].uri
             })
         })
         .then(response => {
@@ -104,7 +104,7 @@ class SearchArtists extends Component {
                 return <SearchResultItem 
                     key={element.data.id}
                     link={element.data.uri}
-                    btnClicked={event => this.onAddArtist(event, element.id)}>
+                    btnClicked={event => this.onAddArtist(event, element)}>
                     {element.data.displayName}
                 </SearchResultItem>
             });

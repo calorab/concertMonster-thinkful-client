@@ -79,15 +79,12 @@ class Login extends Component {
             console.log('RESPONSE', response);
             if (response.status !== 200) {
                 this.setState({error: true});
-                console.log(this.state.error);
-            }        
-            return response.json();
-            // add in modal or error display ----- ASK ABOUT BETTER WAY TO DO THE ABOVE
-        })
-        .then(data => {
-            console.log('DATA', data);
+                console.error(this.state.error);
+            } else {
+                this.props.history.push('/dashboard');
+            }
             
-            this.props.history.push('/dashboard');
+            // add in modal or error display ----- ASK ABOUT BETTER WAY TO DO THE ABOVE
         })
         .catch(err => {
             console.log(err);
