@@ -42,6 +42,7 @@ class Login extends Component {
         },
         loading: false,
         isSignup: false,
+        isNewLogin: false,
         error: false,
         token: null,
         userId: null
@@ -58,91 +59,97 @@ class Login extends Component {
     // for above once checkin validity --: valid: checkValidity(event.target.value, 
     // this.state.controls[controlName].validation), touched: true
 
-    onAuthHandler = (event) => {      
-        event.preventDefault();
-        let apiEndpoint = 'http://localhost:8080/auth/login';
-        if (this.state.isSignup) {
-            apiEndpoint = 'http://localhost:8080/auth/signup'
-        }
-        fetch(apiEndpoint, {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-              },
-            body: JSON.stringify({
-                email: this.state.controls.email.value, 
-                password: this.state.controls.password.value
-            })
+onAuthHandler = (event) => {      
+    event.preventDefault();
+    let apiEndpoint = 'http://localhost:8080/auth/login';
+    if (this.state.isSignup) {
+        apiEndpoint = 'http://localhost:8080/auth/signup'
+    }
+    
+    fetch(apiEndpoint, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+        body: JSON.stringify({
+            email: this.state.controls.email.value, 
+            password: this.state.controls.password.value
         })
-        .then(response => {
-            return response.json();
-        }).then(data => {
-            console.log(data);
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('userId', data.userId);
-            this.setState({token: data.token});
-            this.setState({userId: data.userId});
-            console.log(this.state);
-            this.props.history.push('/dashboard');
-        })
-        .catch(err => {
-            console.log(err);
+    })
+    .then(response => {
+        console.log('RESPONSE', response);
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('expirationDate', data.expiresIn);
+        localStorage.setItem('userId', data.userId);
+        console.log(localStorage);
+        this.props.history.push('/dashboard');
+    })
+    .catch(err => {
+        console.log(err);
+    });
+};
+
+switchAuthModeHandler = () => {
+    console.log('state switched');
+    this.setState(prevState => {
+        return {isSignup: !prevState.isSignup}
+    });
+};
+
+onModalClosed = () => {
+    this.setState({error: false});
+}
+
+render() {
+    let formElementsArray = [];
+    for (let element in this.state.controls) {
+        formElementsArray.push({
+            id: element,
+            config: this.state.controls[element]
         });
-    };
+    }
 
-    switchAuthModeHandler = () => {
-        console.log('state switched');
-        this.setState(prevState => {
-            return {isSignup: !prevState.isSignup}
-        });
-    };
-
-    render() {
-        let formElementsArray = [];
-        for (let element in this.state.controls) {
-            formElementsArray.push({
-                id: element,
-                config: this.state.controls[element]
-            });
-        }
-
-        let form = formElementsArray.map(formElement => (
-            <Input
-                key={formElement.id}
-                elementConfig={formElement.config.elementConfig}
-                startValue={formElement.config.elementConfig.type}
-                defaultValue={formElement.config.value}
-                invalid={!formElement.config.valid}
-                shouldValidate={formElement.config.validation}
-                touched={formElement.config.touched} 
-                inputName={formElement.config.elementConfig.type}
-                changed={(event) => this.inputChangedHandler(event, formElement.id)}
-            />
-        ));
+    let form = formElementsArray.map(formElement => (
+        <Input
+            key={formElement.id}
+            elementConfig={formElement.config.elementConfig}
+            startValue={formElement.config.elementConfig.type}
+            defaultValue={formElement.config.value}
+            invalid={!formElement.config.valid}
+            shouldValidate={formElement.config.validation}
+            touched={formElement.config.touched} 
+            inputName={formElement.config.elementConfig.type}
+            changed={(event) => this.inputChangedHandler(event, formElement.id)}
+        />
+    ));
 
 
-        if (this.state.loading) {
-            form = <Spinner />;
-        }
+    if (this.state.loading) {
+        form = <Spinner />;
+    }
 
-        return (
-            <Aux >
-                <div className={classes.Auth}>
-                    {this.state.isSignup ? <h3>Signup</h3> : <h3>Login</h3>}
-                    <form >
-                        {form}
-                        <Button btnType='Success' clicked={this.onAuthHandler}>
-                            {this.state.isSignup ? 'SIGNUP' : 'LOGIN'}
-                        </Button>
-                    </form>
-                </div>
-                <Button btnType='Danger' 
-                    clicked={this.switchAuthModeHandler}>
-                    {this.state.isSignup ? 'LOGIN ' : 'SIGNUP '}INSTEAD?
-                </Button>
-            </Aux>
-        );
-    };
+    return (
+        <Aux >
+            <div className={classes.Auth}>
+                {this.state.isSignup ? <h3>Signup</h3> : <h3>Login</h3>}
+                <form >
+                    {form}
+                    <Button btnType='Success' clicked={this.onAuthHandler}>
+                        {this.state.isSignup ? 'SIGNUP' : 'LOGIN'}
+                    </Button>
+                </form>
+            </div>
+            <Button btnType='Danger' 
+                clicked={this.switchAuthModeHandler}>
+                {this.state.isSignup ? 'LOGIN ' : 'SIGNUP '}INSTEAD?
+            </Button>
+        </Aux>
+    );
+};
 }
 
 export default Login;
