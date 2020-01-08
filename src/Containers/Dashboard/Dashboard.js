@@ -1,29 +1,46 @@
 import React, {Component} from 'react';
 import SearchArtists from '../SearchArtists/SearchArtists';
-import {Redirect, Link} from 'react-router-dom';
+import FollowedArtists from '../FollowedArtists/followedArtists';
+import Aux from '../hoc/Aux/Aux';
+// import {Redirect, Link} from 'react-router-dom';
 import Button from '../../Components/UI/Button/Button';
 
 
-class dashboard extends Component {
+class Dashboard extends Component {
 
-    componentDidMount = () => {
-        if (localStorage.token == undefined) {
-           return <Redirect to='/auth' />
-        }
+    state = {
+        showArtists: false
     }
-    goToMyArtists = () => {
-        this.history.push('/myartists');
+    
+    toggleMyArtists = () => {
+        console.log('showArtists just switched');
+        this.setState(prevState => {
+            return {showArtists: !prevState.showArtists}
+        });
     }
 
     render(props) {
+        console.log(this.state);
+        let display = 
+            <Aux>
+                <SearchArtists clicked={this.toggleMyArtists} /> 
+                <Button btnType="Success" clicked={this.toggleMyArtists}>Go to Your Followed Artists</Button>  
+            </Aux>;
+
+        if (this.state.showArtists) {
+            display = 
+                <div>
+                    <FollowedArtists />
+                </div>;
+        }
+
         return (
             <div>
-                <SearchArtists /> 
-                <Button clicked={this.goToMyArtists}>Go to Your Followed Artists</Button>  
-            </div>
+                {display}
+            </div>       
         );
     }
     
 };
 
-export default dashboard;
+export default Dashboard;
