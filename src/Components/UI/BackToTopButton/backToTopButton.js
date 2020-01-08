@@ -4,8 +4,8 @@ import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import classes from './backToTopButton.module.css';
 
 const backToTopButton = (props) => (
-    <div className={classes.Arrow}>
-        <FontAwesomeIcon className={classes.ArrowFloat} onClick={props.clicked} icon={faArrowUp} />
+    <div className={classes.Arrow} onClick={props.clicked}>
+        <FontAwesomeIcon className={classes.ArrowFloat}  icon={faArrowUp} />
     </div>
 );
     

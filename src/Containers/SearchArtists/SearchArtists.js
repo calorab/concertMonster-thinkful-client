@@ -16,11 +16,13 @@ class SearchArtists extends Component {
     state = {
         error: false,
         loading: false,
-        artists: []
+        artists: [],
+        showScroll: false,
+        
     }
 
     submitHandler = (event) => {
-        this.setState({loading: true});
+        this.setState({loading: true, showScroll: false});
         const artist = event.target.search.value;
         const url = 'http://localhost:8080/search/artists/' + encodeURIComponent(artist);
         console.log('URL and Artist:', url, artist);
@@ -31,8 +33,10 @@ class SearchArtists extends Component {
         .then(response => {
             this.setState({
                 loading: false,
+                showScroll: true,
                 artists: response.data.results.artist
             });
+            
         })
         .then(data => console.log('This is the artist state:', this.state.artists))
         .catch(err => {
@@ -47,6 +51,7 @@ class SearchArtists extends Component {
     onAddArtist = (event, artist) => {
         // event.preventDefault();
         // alert('You clicked a button!!');
+        this.setState({loading: true});
         let apiEndpoint = 'http://localhost:8080/followedartists/myartist';
         console.log(artist.data.displayName);
         fetch(apiEndpoint, {
@@ -62,6 +67,8 @@ class SearchArtists extends Component {
         })
         .then(response => {
             console.log('RESPONSE', response);
+            this.setState({loading: false});
+            
             return response.json();
         })
         .then(data => {
@@ -70,6 +77,7 @@ class SearchArtists extends Component {
         })
         .catch(err => {
             console.log(err);
+            this.setState({error: true});
         });
     };
     
@@ -116,7 +124,7 @@ class SearchArtists extends Component {
                 <h3>Search for Artists Below</h3>
                 {searchForm}
                 {searchResults}
-                <BackToTopButton clicked={() => window.scrollTo(0,0)} />
+                {this.state.showScroll ? <BackToTopButton clicked={() => window.scrollTo(0,0)} />: null}
             </div>
         );
     }

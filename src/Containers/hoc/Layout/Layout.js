@@ -24,10 +24,12 @@ class Layout extends Component {
             // Should replace <div> with <aux> to allow multiple components/elements
             <div>
                 <Toolbar
-                    drawerToggleClicked={this.drawerToggleHandler} />
+                    drawerToggleClicked={this.drawerToggleHandler} 
+                    isAuth={this.state.isAuthenticated}/>
                 <SideDrawer
                     close={this.sideDrawerClosehandler}
-                    open={this.state.sideDrawerOpen} />
+                    open={this.state.sideDrawerOpen}
+                    isAuth={this.state.isAuthenticated} />
                 <main className={classes.Content}>
                     {this.props.children}
                 </main>

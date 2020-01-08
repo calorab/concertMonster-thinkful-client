@@ -11,6 +11,12 @@ const navigationItems = (props) => (
             link='/auth'>
             GET STARTED
         </NavItem>
+        {props.isAuthenticated ? 
+            <NavItem 
+                className={classes.NavigationItems} 
+                link='/myartists'>
+                MY ARTISTS
+            </NavItem> : null}       
     </ul>
 );
 

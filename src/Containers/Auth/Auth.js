@@ -6,7 +6,6 @@ import {updateObject, checkValidity} from '../../Utility/utility';
 import Aux from '../../Containers/hoc/Aux/Aux';
 
 import classes from './Auth.module.css';
-import Modal from '../../Components/UI/Modal/modal';
 
 class Login extends Component {
 
@@ -43,7 +42,9 @@ class Login extends Component {
         },
         loading: false,
         isSignup: false,
-        error: false
+        error: false,
+        token: null,
+        userId: null
     }
 
     inputChangedHandler = (event, controlName) => {
@@ -57,14 +58,12 @@ class Login extends Component {
     // for above once checkin validity --: valid: checkValidity(event.target.value, 
     // this.state.controls[controlName].validation), touched: true
 
-//CALEB - working here when you left off - not done with Axios call
     onAuthHandler = (event) => {      
         event.preventDefault();
         let apiEndpoint = 'http://localhost:8080/auth/login';
         if (this.state.isSignup) {
             apiEndpoint = 'http://localhost:8080/auth/signup'
         }
-        
         fetch(apiEndpoint, {
             method: 'post',
             headers: {
@@ -76,15 +75,15 @@ class Login extends Component {
             })
         })
         .then(response => {
-            console.log('RESPONSE', response);
-            if (response.status !== 200) {
-                this.setState({error: true});
-                console.error(this.state.error);
-            } else {
-                this.props.history.push('/dashboard');
-            }
-            
-            // important tag
+            return response.json();
+        }).then(data => {
+            console.log(data);
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('userId', data.userId);
+            this.setState({token: data.token});
+            this.setState({userId: data.userId});
+            console.log(this.state);
+            this.props.history.push('/dashboard');
         })
         .catch(err => {
             console.log(err);
@@ -97,10 +96,6 @@ class Login extends Component {
             return {isSignup: !prevState.isSignup}
         });
     };
-
-    onModalClosed = () => {
-        this.setState({error: false});
-    }
 
     render() {
         let formElementsArray = [];
@@ -141,11 +136,6 @@ class Login extends Component {
                         </Button>
                     </form>
                 </div>
-                <Modal 
-                    show={this.state.error} 
-                    modalClosed={this.onModalClosed}>
-                    The email/password combo is incorrect
-                </Modal>
                 <Button btnType='Danger' 
                     clicked={this.switchAuthModeHandler}>
                     {this.state.isSignup ? 'LOGIN ' : 'SIGNUP '}INSTEAD?
