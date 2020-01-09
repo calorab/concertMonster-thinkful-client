@@ -11,7 +11,11 @@ class followedArtists extends Component {
         error: false
     }
 
-    testHandler = () => {
+    componentDidMount = () => {
+        this.getMyArtistsHandler();
+    };
+
+    getMyArtistsHandler = () => {
         const url = 'http://localhost:8080/followedartists/myartists';
         axios.request({
             method: 'get',
@@ -28,7 +32,31 @@ class followedArtists extends Component {
         .catch(err => {
             console.log(err);
         });
-    }
+    };
+
+    unfollowHandler = (artist, event) => {
+        event.preventDefault();
+        console.log('START...');
+        const url = 'http://localhost:8080/followedartists/deleteartist';
+        fetch(url, {
+            method: 'delete',
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify({
+                artistId: artist
+            })
+        })
+        .then(response => {
+            console.log('RESPONSE', response.body);
+            return response;
+        }).then(() => {
+            return this.getMyArtistsHandler();
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    };
 
     render() {
 
@@ -43,22 +71,28 @@ class followedArtists extends Component {
         let myArtistsResults;
         if (this.state.error) {
             myArtistsResults = <h5>There was a problem getting your results. Please refresh the page and try again.</h5>;
+        } else if (!this.state.artists) {
+
+            // CALEB THIS IS NOT WORKING:
+            
+            myArtistsResults = 
+            <div>
+                <h5>You're not following any artists</h5>
+                <p>Return to your dashboard and search for artists to follow them</p>
+            </div>;
         }
 
         myArtistsResults = myArtistsArray.map(element => {
                 return <MyArtistItem 
                     key={element.data._id}
                     link={element.data.url}
-                    tour={element.data.tour ? element.data.tour : 'Not on tour'}>
+                    tour={element.data.tour ? element.data.tour : 'Not on tour'}
+                    cnclButton={event => this.unfollowHandler(element.data._id, event)}>
                     {element.data.name}
                 </MyArtistItem>
             });
         return (
-            <Aux>
-                <div>
-                    <h3>ToDo: make a get request and map results</h3>
-                </div>
-                <Button btnType='Danger' clicked={this.testHandler}>Testing 1-2-3...</Button>
+            <Aux>  
                 {myArtistsResults}
             </Aux>
         )
@@ -66,5 +100,5 @@ class followedArtists extends Component {
     
 };
 
-// btnClicked={event => this.onAddArtist(event, element)}>
+// btnClicked={event => this.onGetConcerts(event, element)}>
 export default followedArtists;

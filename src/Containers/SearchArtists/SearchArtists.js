@@ -35,8 +35,7 @@ class SearchArtists extends Component {
                 loading: false,
                 showScroll: true,
                 artists: response.data.results.artist
-            });
-            
+            });  
         })
         .then(data => console.log('This is the artist state:', this.state.artists))
         .catch(err => {
@@ -49,8 +48,6 @@ class SearchArtists extends Component {
     };
 
     onAddArtist = (event, artist) => {
-        // event.preventDefault();
-        // alert('You clicked a button!!');
         this.setState({loading: true});
         let apiEndpoint = 'http://localhost:8080/followedartists/myartist';
         console.log(artist.data.displayName);

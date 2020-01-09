@@ -9,8 +9,16 @@ import Button from '../../Components/UI/Button/Button';
 class Dashboard extends Component {
 
     state = {
-        showArtists: false
+        showArtists: false,
+        token: false
     }
+
+    // componentDidMount = () => {
+    //     if (localstorage.getItem('token')) {
+    //         this.setState({token: true});
+    //         console.log(this.state.token);
+    //     }
+    // };
     
     toggleMyArtists = () => {
         console.log('showArtists just switched');
@@ -22,10 +30,9 @@ class Dashboard extends Component {
     render(props) {
         console.log(this.state);
         let display = 
-            <Aux>
-                <SearchArtists clicked={this.toggleMyArtists} /> 
-                <Button btnType="Success" clicked={this.toggleMyArtists}>Go to Your Followed Artists</Button>  
-            </Aux>;
+            <div>
+                <SearchArtists clicked={this.toggleMyArtists} />   
+            </div>;
 
         if (this.state.showArtists) {
             display = 
@@ -35,9 +42,19 @@ class Dashboard extends Component {
         }
 
         return (
-            <div>
+            <Aux>
+                {!this.state.showArtists ? 
+                    <Button btnType="Success" 
+                        clicked={this.toggleMyArtists}>
+                        Go to Your Followed Artists
+                    </Button> : 
+                    <Button btnType="Success" 
+                        clicked={this.toggleMyArtists}>
+                        Go back to Search
+                    </Button>
+                }
                 {display}
-            </div>       
+            </Aux>       
         );
     }
     

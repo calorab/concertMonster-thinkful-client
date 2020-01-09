@@ -48,6 +48,11 @@ class Login extends Component {
         userId: null
     }
 
+    // componentDidMount = () => {
+    //     const token = localstorage.getItem('token');
+    //     console.log(token);
+    // };
+
     inputChangedHandler = (event, controlName) => {
         const updatedControls = updateObject(this.state.controls, {
             [controlName]: updateObject(this.state.controls[controlName], {
