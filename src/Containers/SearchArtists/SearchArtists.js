@@ -66,12 +66,11 @@ class SearchArtists extends Component {
         .then(response => {
             console.log('RESPONSE', response);
             this.setState({loading: false});
-            
             return response.json();
         })
         .then(data => {
             console.log('DATA', data);
-            alert('FOLLOWED!!');
+            return data;
         })
         .catch(err => {
             console.log(err);

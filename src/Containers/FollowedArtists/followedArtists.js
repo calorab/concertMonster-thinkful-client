@@ -45,14 +45,20 @@ class followedArtists extends Component {
                 'Content-Type': 'application/json'
               },
             body: JSON.stringify({
-                artistId: artist
+                artistId: artist,
+                userId: sessionStorage.getItem('userId')
             })
         })
         .then(response => {
-            console.log('RESPONSE', response.body);
+            console.log('RESPONSE', response);
             return response;
-        }).then(() => {
-            return this.getMyArtistsHandler();
+        }).then(response => {
+            if (response.ok) {
+                return this.getMyArtistsHandler();
+            }
+            const error = new Error('Not authorized!');
+            error.statusCode = 403;
+            throw error;
         })
         .catch(err => {
             console.log(err);

@@ -89,7 +89,6 @@ onAuthHandler = (event) => {
     .then(data => {
         console.log(data);
         sessionStorage.setItem('token', data.token);
-        sessionStorage.setItem('expirationDate', data.expiresIn);
         sessionStorage.setItem('userId', data.userId);
         console.log(sessionStorage);
         this.props.history.push('/dashboard');
