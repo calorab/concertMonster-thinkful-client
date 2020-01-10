@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import {Route} from 'react-router-dom';
+import {Route, Redirect} from 'react-router-dom';
 import './App.css';
 import Auth from './Containers/Auth/Auth';
 import Layout from './Containers/hoc/Layout/Layout';
-import Welcome from './Components/Welcome/Welcome';
+import Welcome from './Containers/Welcome/Welcome';
 import Dashboard from './Containers/Dashboard/Dashboard';
 
 class App extends Component {
+
   render() {
     return (
       <div className="App">

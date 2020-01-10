@@ -13,12 +13,12 @@ class Dashboard extends Component {
         token: false
     }
 
-    // componentDidMount = () => {
-    //     if (localstorage.getItem('token')) {
-    //         this.setState({token: true});
-    //         console.log(this.state.token);
-    //     }
-    // };
+    componentDidMount = () => {
+        if (!localStorage.getItem('token')) {
+            this.props.history.push('/auth');
+            // this.setState({token: true});
+        } 
+    };
     
     toggleMyArtists = () => {
         console.log('showArtists just switched');
