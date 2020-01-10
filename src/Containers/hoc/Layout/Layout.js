@@ -6,8 +6,7 @@ import SideDrawer from '../../../Components/Navigation/SideDrawer/SideDrawer';
 
 class Layout extends Component {
     state = {
-        sideDrawerOpen: false,
-        isAuthenticated: false
+        sideDrawerOpen: false
     }
 
     sideDrawerClosehandler = () => {
@@ -22,7 +21,6 @@ class Layout extends Component {
 
     render(props) {
         return (
-            // Should replace <div> with <aux> to allow multiple components/elements
             <div>
                 <Toolbar
                     drawerToggleClicked={this.drawerToggleHandler} 
