@@ -16,6 +16,7 @@ class followedArtists extends Component {
     };
 
     getMyArtistsHandler = () => {
+        console.log('GET  request ');
         const url = 'http://localhost:8080/followedartists/myartists';
         axios.request({
             method: 'get',
@@ -70,11 +71,10 @@ class followedArtists extends Component {
 
         let myArtistsResults;
         if (this.state.error) {
+            this.setState({loading: false});
             myArtistsResults = <h5>There was a problem getting your results. Please refresh the page and try again.</h5>;
         } else if (!this.state.artists) {
-
-            // CALEB THIS IS NOT WORKING:
-            
+            this.setState({loading: false});
             myArtistsResults = 
             <div>
                 <h5>You're not following any artists</h5>

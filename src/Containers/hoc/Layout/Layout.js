@@ -20,10 +20,6 @@ class Layout extends Component {
         })
     }
 
-    // authHandler = () => {
-    //     if (localStorage.token)
-    // };
-
     render(props) {
         return (
             // Should replace <div> with <aux> to allow multiple components/elements

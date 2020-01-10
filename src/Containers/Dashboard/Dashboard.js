@@ -9,14 +9,12 @@ import Button from '../../Components/UI/Button/Button';
 class Dashboard extends Component {
 
     state = {
-        showArtists: false,
-        token: false
+        showArtists: false
     }
 
     componentDidMount = () => {
-        if (!localStorage.getItem('token')) {
+        if (!sessionStorage.getItem('token')) {
             this.props.history.push('/auth');
-            // this.setState({token: true});
         } 
     };
     

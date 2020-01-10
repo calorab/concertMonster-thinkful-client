@@ -10,7 +10,7 @@ export class Welcome extends Component {
     }
 
     componentDidMount = () => {
-        if (localStorage.getItem('token')) {
+        if (sessionStorage.getItem('token')) {
             // this.props.history.push('/dashboard');
             this.setState({token: true});
         } 

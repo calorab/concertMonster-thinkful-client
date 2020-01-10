@@ -48,10 +48,11 @@ class Login extends Component {
         userId: null
     }
 
-    // componentDidMount = () => {
-    //     const token = localstorage.getItem('token');
-    //     console.log(token);
-    // };
+    componentDidMount = () => {
+        if (sessionStorage.getItem('token')) {
+            this.props.history.push('/dashboard');
+        } 
+    };
 
     inputChangedHandler = (event, controlName) => {
         const updatedControls = updateObject(this.state.controls, {
@@ -87,10 +88,10 @@ onAuthHandler = (event) => {
     })
     .then(data => {
         console.log(data);
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('expirationDate', data.expiresIn);
-        localStorage.setItem('userId', data.userId);
-        console.log(localStorage);
+        sessionStorage.setItem('token', data.token);
+        sessionStorage.setItem('expirationDate', data.expiresIn);
+        sessionStorage.setItem('userId', data.userId);
+        console.log(sessionStorage);
         this.props.history.push('/dashboard');
     })
     .catch(err => {

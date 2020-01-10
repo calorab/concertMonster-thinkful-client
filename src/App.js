@@ -6,6 +6,8 @@ import Layout from './Containers/hoc/Layout/Layout';
 import Welcome from './Containers/Welcome/Welcome';
 import Dashboard from './Containers/Dashboard/Dashboard';
 
+import Logout from './Containers/Logout/logout';
+
 class App extends Component {
 
   render() {
@@ -14,6 +16,7 @@ class App extends Component {
         <Layout>
             <Route path='/' exact component={Welcome} />
             <Route path='/auth' component={Auth}/>
+            <Route path='/logout' component={Logout}/>
             <Route path='/dashboard' component={Dashboard}/>
         </Layout>
       </div>

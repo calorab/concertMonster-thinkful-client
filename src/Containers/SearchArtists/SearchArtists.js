@@ -59,7 +59,8 @@ class SearchArtists extends Component {
             body: JSON.stringify({
                 name: artist.data.displayName, 
                 tour: artist.data.onTourUntil,
-                url: artist.data.uri
+                url: artist.data.uri,
+                userId: sessionStorage.getItem('userId')
             })
         })
         .then(response => {

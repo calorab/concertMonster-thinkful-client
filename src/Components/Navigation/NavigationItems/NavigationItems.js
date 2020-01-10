@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './NavigationItems.module.css';
 
+
 import NavItem from './NavItem/Navitem';
 
 const navigationItems = (props) => (
@@ -11,11 +12,11 @@ const navigationItems = (props) => (
             link='/auth'>
             GET STARTED
         </NavItem>
-        {props.isAuthenticated ? 
+        {sessionStorage.getItem('token') ? 
             <NavItem 
                 className={classes.NavigationItems} 
-                link='/myartists'>
-                MY ARTISTS
+                link='/logout'>
+                LOGOUT
             </NavItem> : null}       
     </ul>
 );
