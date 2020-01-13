@@ -71,7 +71,7 @@ onAuthHandler = (event) => {
     if (this.state.isSignup) {
         apiEndpoint = 'http://localhost:8080/auth/signup'
     }
-    
+    console.log('the state: ', this.state.isSignup)
     fetch(apiEndpoint, {
         method: 'post',
         headers: {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Route, Redirect} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import './App.css';
 import Auth from './Containers/Auth/Auth';
 import Layout from './Containers/hoc/Layout/Layout';
