@@ -148,7 +148,7 @@ render() {
                     </Button>
                 </form>
             </div>
-            <Button btnType='Danger' 
+            <Button className='testing' btnType='Danger' 
                 clicked={this.switchAuthModeHandler}>
                 {this.state.isSignup ? 'LOGIN ' : 'SIGNUP '}INSTEAD?
             </Button>
