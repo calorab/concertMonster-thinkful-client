@@ -143,12 +143,12 @@ render() {
                 {this.state.isSignup ? <h3>Signup</h3> : <h3>Login</h3>}
                 <form >
                     {form}
-                    <Button btnType='Success' clicked={this.onAuthHandler}>
+                    <Button className='testing1' btnType='Success' clicked={this.onAuthHandler}>
                         {this.state.isSignup ? 'SIGNUP' : 'LOGIN'}
                     </Button>
                 </form>
             </div>
-            <Button className='testing' btnType='Danger' 
+            <Button className='testing2' btnType='Danger' 
                 clicked={this.switchAuthModeHandler}>
                 {this.state.isSignup ? 'LOGIN ' : 'SIGNUP '}INSTEAD?
             </Button>

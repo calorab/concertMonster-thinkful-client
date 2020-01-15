@@ -82,7 +82,7 @@ class SearchArtists extends Component {
 
         let searchForm =
             <form className={classes.SearchArtists} onSubmit={(event) => this.submitHandler(event)}>
-                <Input startValue='Search Artist' inputName='search'/>
+                <Input className='testing' startValue='Search Artist' inputName='search'/>
                 <Button btnType="Success">SEARCH</Button>
                 
             </form>

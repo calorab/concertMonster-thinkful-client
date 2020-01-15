@@ -6,7 +6,7 @@ import Button from '../../Components/UI/Button/Button';
 import Adapter from '../../setupTests';
 
 
-describe('<Welcome />', () => {
+describe('<Auth />', () => {
     it('Renders without crashing', () => {
         shallow(<Auth />);
     });
@@ -23,16 +23,23 @@ describe('<Welcome />', () => {
 
     it('Should switch to signup when switch button is clicked', () => {
         const wrapper = mount(<Auth /> );
-        wrapper.find('.testing').simulate('click');
+        wrapper.find('.testing2').simulate('click');
         expect(wrapper.state('isSignup')).toEqual(true);
-        expect(wrapper)
     });
 
+    // HELP - not working corrctly - can't access state.controls.email/password.value
     // it('Should submit onAuthhandler when form is submitted', () => {
     //     const callback = jest.fn();
-    //     const wrapper = mount(<Auth /> );
-    //     wrapper.find('.testing').simulate('click');
-    //     expect(wrapper.state('isSignup')).toEqual(true);
-    //     expect(wrapper)
+    //     const wrapper = mount(<Auth onAuthHandler={callback}/> );
+    //     (... set state here ...)
+    //     wrapper.find('.testing1').simulate('click');
+    //     expect(callback).toHaveBeenCalled();
     // });
+
+    it('Should not submit onAuthhandler when form is submitted without data', () => {
+        const callback = jest.fn();
+        const wrapper = mount(<Auth onAuthHandler={callback}/> );
+        wrapper.find('.testing1').simulate('click');
+        expect(callback).not.toHaveBeenCalled();
+    });
 });
