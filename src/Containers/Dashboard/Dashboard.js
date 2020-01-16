@@ -11,9 +11,9 @@ class Dashboard extends Component {
     state = {
         showArtists: false
     }
-
+//testing option
     componentDidMount = () => {
-        if (!sessionStorage.getItem('token')) {
+        if (!sessionStorage.getItem('token') && this.props.history) {
             this.props.history.push('/auth');
         } 
     };

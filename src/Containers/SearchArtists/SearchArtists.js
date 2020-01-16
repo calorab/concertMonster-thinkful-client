@@ -47,7 +47,7 @@ class SearchArtists extends Component {
         });
     };
 
-    onAddArtist = (event, artist) => {
+    onAddArtist = (artist) => {
         this.setState({loading: true});
         let apiEndpoint = 'http://localhost:8080/followedartists/myartist';
         console.log(artist.data.displayName);
@@ -82,12 +82,12 @@ class SearchArtists extends Component {
 
         let searchForm =
             <form className={classes.SearchArtists} onSubmit={(event) => this.submitHandler(event)}>
-                <Input className='testing' startValue='Search Artist' inputName='search'/>
+                <Input className='testing3' startValue='Search Artist' inputName='search'/>
                 <Button btnType="Success">SEARCH</Button>
                 
             </form>
         ;
-
+ 
         let searchResultsArray = [];
         for (const searchElement of this.state.artists) {
             searchResultsArray.push({

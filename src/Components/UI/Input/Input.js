@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Input.module.css';
 
-const input = (props) => {
+const Input = (props) => {
     // let inputClasses = [classes.InputElement]
     // if (props.invalid && props.shouldValidate && props.touched) {
     //     inputClasses.push(classes.Invalid)
@@ -19,4 +19,4 @@ const input = (props) => {
     );
 }
 
-export default input;
+export default Input;

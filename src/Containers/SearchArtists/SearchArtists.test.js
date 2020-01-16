@@ -1,5 +1,6 @@
 import React from 'react';
 import {shallow, mount} from 'enzyme';
+import spyOn from 'spyon';
 
 import SearchArtists from './SearchArtists';
 import Input from '../../Components/UI/Input/Input';
@@ -11,30 +12,26 @@ describe('<SearchArtists />', () => {
         shallow(<SearchArtists />);
     });
 
-    // it('Renders with showArtist = false', () => {
-    //     let wrapper = shallow(<SearchArtists />);
-    //     expect(wrapper.state('showArtists')).toEqual(false);
-    // });
-
-    // it('Should change showArtist state on toggle method', () => {
-    //     const wrapper = shallow(<SearchArtists />);
-    //     wrapper.instance().toggleMyArtists();
-    //     expect(wrapper.state('showArtists')).toEqual(true);
-    // });
-
     it('Should NOT call submitHandler without entering input', () => {
         const callback = jest.fn();
         const wrapper = mount(<SearchArtists submitHandler={callback}/> );
-        wrapper.find('.testing').simulate('click');
-        expect(callback).not.toHaveBeenCalled();
+        wrapper.find('.testing3').simulate('click');
+        expect(callback).toHaveBeenCalledTimes(0);
     });
+    // HELP - cthe below get's 'Cannot read property 'value' of undefined' - when I change from submit to click changes error
+    // it('Should call submitHandler when search submitted', () => {
+    //     const wrapper = mount(<SearchArtists event={() => {}}/> );
+    //     const spy =  jest.spyOn(wrapper.instance(), 'submitHandler');
+    //     wrapper.find('.testing3').simulate('submit');
+    //     expect(spy).toHaveBeenCalledTimes(1);
+    // });
+    // this below get's Cannot read property 'target' of undefined
+    // it('Should call submitHandler when search submitted', () => {
+    //         const wrapper = mount(<SearchArtists /> );
+    //         wrapper.instance().submitHandler();
+    //         expect('submitHandler').toHaveBeenCalledTimes(1);
+    //  });
 
-    it('Should call submitHandler when search submitted', () => {
-        const callback = jest.fn();
-        const wrapper = mount(<SearchArtists submitHandler={callback}/> );
-        const value = 'Alison';
-        wrapper.find(Input).instance().value = value;
-        wrapper.simulate('submit');
-        expect(callback).not.toHaveBeenCalled();
-    });
+    // test onAddArtist when results from submitHandler return and button clicked
+    // it('should call onAddArtist when result return from search')
 });

@@ -1,5 +1,6 @@
 import React from 'react';
 import {shallow, mount} from 'enzyme';
+import spyOn from 'spyon';
 
 import Auth from './Auth';
 import Button from '../../Components/UI/Button/Button';
@@ -28,13 +29,44 @@ describe('<Auth />', () => {
     });
 
     // HELP - not working corrctly - can't access state.controls.email/password.value
-    // it('Should submit onAuthhandler when form is submitted', () => {
-    //     const callback = jest.fn();
-    //     const wrapper = mount(<Auth onAuthHandler={callback}/> );
-    //     (... set state here ...)
-    //     wrapper.find('.testing1').simulate('click');
-    //     expect(callback).toHaveBeenCalled();
-    // });
+    it('Should submit onAuthHandler when form is submitted', () => {
+        const wrapper = mount(<Auth /> );
+        const spy =  jest.spyOn(wrapper.instance(), 'onAuthHandler');
+        wrapper.setState({
+            controls: {
+                email: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'email',
+                        placeholder: 'Your Email'
+                    },
+                    value: 'test@test.com',
+                    validation: {
+                        required: true,
+                        isEmail: true
+                    },
+                    valid: true,
+                    touched: true
+                },
+                password: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'password',
+                        placeholder: 'Your Password'
+                    },
+                    value: '123456',
+                    validation: {
+                        required: true,
+                        minLength: 6
+                    },
+                    valid: true,
+                    touched: true
+                }
+            }
+        })
+        wrapper.find('.testing1').simulate('click');
+        expect(spy).toHaveBeenCalledTimes(1);
+    });
 
     it('Should not submit onAuthhandler when form is submitted without data', () => {
         const callback = jest.fn();

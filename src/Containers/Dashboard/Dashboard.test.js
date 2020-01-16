@@ -4,7 +4,8 @@ import {shallow, mount} from 'enzyme';
 import Dashboard from './Dashboard';
 import Adapter from '../../setupTests';
 
-//HELP --- Wont pass, error: " TypeError: Cannot read property 'push' of undefined  " in Dashboard CDM
+//HELP --- Wont-pass-'push'-error fixed by && history prop in Dashboard CDM LS Method - alternate fix: 
+//pass 'history={{push: () => {}}' as prop to <Dashbpoard />
 describe('<Dashboard />', () => {
     it('Renders without crashing', () => {
         shallow(<Dashboard />);
