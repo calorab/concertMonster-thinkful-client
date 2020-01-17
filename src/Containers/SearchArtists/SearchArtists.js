@@ -13,17 +13,29 @@ import axios from 'axios';
 
 class SearchArtists extends Component {
 
-    state = {
-        error: false,
-        loading: false,
-        artists: [],
-        showScroll: false,
-        
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: false,
+            loading: false,
+            artists: [],
+            showScroll: false,
+            searchValue: ''
+        };
+    
+        this.handleChange = this.handleChange.bind(this);
+        this.submitHandler = this.submitHandler.bind(this);
     }
 
-    submitHandler = (event) => {
+    
+
+    handleChange(event) {
+        this.setState({searchValue: event.target.value});
+    };
+
+    submitHandler = () => {
         this.setState({loading: true, showScroll: false});
-        const artist = event.target.search.value;
+        const artist = this.state.searchValue;
         const url = 'http://localhost:8080/search/artists/' + encodeURIComponent(artist);
         console.log('URL and Artist:', url, artist);
         axios.request({
@@ -82,8 +94,15 @@ class SearchArtists extends Component {
 
         let searchForm =
             <form className={classes.SearchArtists} onSubmit={(event) => this.submitHandler(event)}>
-                <Input className='testing3' startValue='Search Artist' inputName='search'/>
-                <Button btnType="Success">SEARCH</Button>
+                <Input 
+                    className='testing3' 
+                    inputValue={this.state.searchValue} 
+                    startValue='Search Artist' 
+                    changed={this.handleChange}/>
+                <Button 
+                    btnType="Success">
+                    SEARCH
+                </Button>
                 
             </form>
         ;

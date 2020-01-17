@@ -16,10 +16,8 @@ class followedArtists extends Component {
     };
 
     getMyArtistsHandler = () => {
-        console.log('GET  request ');
         const url = 'http://localhost:8080/followedartists/myartists';
         const token = sessionStorage.getItem('token');
-        console.log(token);
         axios.request({
             method: 'get',
             url: url,
@@ -28,7 +26,7 @@ class followedArtists extends Component {
             }
         })
         .then(response => {
-            console.log('RESPONSE ', response);
+            // console.log('RESPONSE ', response);
             this.setState({
                 artists: response.data.artists
             });

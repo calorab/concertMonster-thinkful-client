@@ -14,7 +14,8 @@ const Input = (props) => {
                 {...props.elementConfig}
                 placeholder={props.startValue}
                 onChange={props.changed} 
-                name={props.inputName}/>
+                name={props.inputName}
+                value={props.inputValue}/>
         </div>
     );
 }
