@@ -59,10 +59,10 @@ class SearchArtists extends Component {
         });
     };
 
-    onAddArtist = (artist) => {
+    onAddArtist = (event, artist) => {
         this.setState({loading: true});
         let apiEndpoint = 'http://localhost:8080/followedartists/myartist';
-        console.log(artist.data.displayName);
+        console.log(artist);
         fetch(apiEndpoint, {
             method: 'post',
             headers: {

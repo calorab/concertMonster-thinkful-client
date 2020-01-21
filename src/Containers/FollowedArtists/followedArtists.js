@@ -3,12 +3,14 @@ import MyArtistItem from '../../Components/MyArtistItem/myArtistItem';
 import axios from 'axios';
 import Button from '../../Components/UI/Button/Button';
 import Aux from '../hoc/Aux/Aux';
+import BackToTopButton from '../../Components/UI/BackToTopButton/backToTopButton';
 
 
 class followedArtists extends Component {
     state = {
         artists: [],
-        error: false
+        error: false,
+        showScroll: false
     }
 
     componentDidMount = () => {
@@ -28,9 +30,12 @@ class followedArtists extends Component {
         .then(response => {
             // console.log('RESPONSE ', response);
             this.setState({
-                artists: response.data.artists
+                artists: response.data.artists,
             });
             console.log(this.state.artists);
+            if (this.state.artists.length > 5) {
+                this.setState({showScroll: true});
+            }
             return response;
         })
         .catch(err => {
@@ -78,17 +83,15 @@ class followedArtists extends Component {
             });
         };
 
-        let myArtistsResults;
+        let myArtistsResults = 
+        <div>
+            <h5>You're not following any artists</h5>
+            <p>Return to your dashboard and search for artists to follow them</p>
+        </div>;
+
         if (this.state.error) {
             this.setState({loading: false});
             myArtistsResults = <h5>There was a problem getting your results. Please refresh the page and try again.</h5>;
-        } else if (!this.state.artists) {
-            this.setState({loading: false});
-            myArtistsResults = 
-            <div>
-                <h5>You're not following any artists</h5>
-                <p>Return to your dashboard and search for artists to follow them</p>
-            </div>;
         }
 
         myArtistsResults = myArtistsArray.map(element => {
@@ -103,6 +106,7 @@ class followedArtists extends Component {
         return (
             <Aux>  
                 {myArtistsResults}
+                {this.state.showScroll ? <BackToTopButton clicked={() => window.scrollTo(0,0)} />: null}
             </Aux>
         )
     }
