@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
 import Spinner from '../../Components/UI/Spinner/Spinner';
-import {updateObject, checkValidity} from '../../Utility/utility';
 import Aux from '../../Containers/hoc/Aux/Aux';
 import { Formik, Field, Form, ErrorMessage, withFormik } from 'formik';
 import * as Yup from 'yup';

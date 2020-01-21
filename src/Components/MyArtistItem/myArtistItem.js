@@ -1,11 +1,12 @@
 import React from 'react';
 import Button from '../UI/Button/Button';
+import classes from './myArtistItem.module.css';
 
 const myArtistItem = (props) => {
 
 
     return (
-        <div>
+        <div className={classes.Result}>
             <h3>{props.children}</h3>
             <Button btnType='Success' clicked={props.btnClicked}>Find Concerts</Button>
             <Button btnType='Danger' clicked={props.cnclButton}>Unfollow</Button>
