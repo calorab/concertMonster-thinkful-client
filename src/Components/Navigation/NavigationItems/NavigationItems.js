@@ -4,9 +4,10 @@ import classes from './NavigationItems.module.css';
 
 import NavItem from './NavItem/Navitem';
 
-const navigationItems = (props) => (
-// I want to make the navItems be different based on if the user is logged in or not
-    <ul>
+const navigationItems = (props) => {
+    console.log(sessionStorage.getItem('token'));
+    return(
+        <ul>
         {sessionStorage.getItem('token') ? 
             <NavItem 
                 className={classes.NavigationItems} 
@@ -14,7 +15,10 @@ const navigationItems = (props) => (
                 LOGOUT
             </NavItem> : 
             null}       
-    </ul>
-);
+        </ul>
+    )
+
+    
+};
 
 export default navigationItems;

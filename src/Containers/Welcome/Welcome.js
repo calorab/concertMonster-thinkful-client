@@ -17,7 +17,7 @@ export class Welcome extends Component {
     };
 
     getStartedHandler = () => {
-        console.log(this.state);
+        // console.log(this.state);
         if (this.state.token) {
             this.props.history.push('/dashboard');
         }

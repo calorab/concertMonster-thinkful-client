@@ -6,8 +6,16 @@ import SideDrawer from '../../../Components/Navigation/SideDrawer/SideDrawer';
 
 class Layout extends Component {
     state = {
-        sideDrawerOpen: false
+        sideDrawerOpen: false,
+        isAuthenticated: false
     }
+
+    componentDidUpdate = () => {
+        console.log("I made it!");
+        if (sessionStorage.getItem('token')) {
+            this.setState({isAuthenticated: true})
+        }
+    };
 
     sideDrawerClosehandler = () => {
         this.setState({sideDrawerOpen: false});
