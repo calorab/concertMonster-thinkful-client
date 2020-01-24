@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '../UI/Button/Button';
 import classes from './myArtistItem.module.css';
+import {Link} from 'react-router-dom';
 
 const myArtistItem = (props) => {
 
@@ -11,7 +12,7 @@ const myArtistItem = (props) => {
             <Button btnType='Success' clicked={props.btnClicked}>Find Concerts</Button>
             <Button btnType='Danger' clicked={props.cnclButton}>Unfollow</Button>
             <h5>On Tour til: {props.tour}</h5>
-            <a href={props.link} target='_blank' rel='noopener noreferrer' >Songkick</a>
+            <Link to={props.link} target='_blank' rel='noopener noreferrer' >Songkick</Link>
         </div>
     )
 };

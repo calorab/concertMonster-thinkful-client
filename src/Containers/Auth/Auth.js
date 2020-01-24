@@ -17,7 +17,6 @@ class Login extends Component {
         error: '',
         token: null,
         userId: null,
-        formIsValid: false
     }
 
     componentDidMount = () => {
@@ -25,7 +24,7 @@ class Login extends Component {
             this.props.history.push('/dashboard');
         } 
     };
-
+ 
 
     onAuthHandler = (event) => {      
         event.preventDefault();
@@ -75,10 +74,6 @@ class Login extends Component {
         });
     };
 
-    // onModalClosed = () => {
-    //     this.setState({error: false});
-    // }
-
     render(props) {
 
         let form = 
@@ -96,10 +91,10 @@ class Login extends Component {
                     // withFormik({mapPropsToValues: }) 
                     this.onAuthHandler();
                 }}>
-                <Form onSubmit={this.onAuthHandler} >
+                <Form className='testing' onSubmit={this.onAuthHandler} >
                     <Field name="email" type="email" className={classes.InputElement} placeholder='Your Email' />
                     <ErrorMessage name="email" />
-                    <Field name="password" type="text" className={classes.InputElement} placeholder='Your Password' />
+                    <Field name="password" type="text" className={classes.InputElement2} placeholder='Your Password' />
                     <ErrorMessage name="password" />
                     <Button 
                         className='testing1' 

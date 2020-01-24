@@ -18,7 +18,7 @@ describe('<SearchArtists />', () => {
         wrapper.find('.testing3').simulate('click');
         expect(callback).toHaveBeenCalledTimes(0);
     });
-    // HELP - the below get's 'Cannot read property 'value' of undefined' - when I change from submit to click changes error
+    
     it('Should call submitHandler when search submitted', () => {
         const wrapper = mount(<SearchArtists /> );
         const spy =  jest.spyOn(wrapper.instance(), 'submitHandler');
@@ -26,7 +26,4 @@ describe('<SearchArtists />', () => {
         wrapper.find('.testing3').simulate('submit');
         expect(spy).toHaveBeenCalledTimes(1);
     });
-
-    // test onAddArtist when results from submitHandler return and button clicked
-    // it('should call onAddArtist when result return from search')
 });

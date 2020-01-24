@@ -1,6 +1,7 @@
 import React from 'react';
 import {shallow, mount} from 'enzyme';
 import spyOn from 'spyon';
+import {Formik, Field} from 'formik';
 
 import Auth from './Auth';
 import Button from '../../Components/UI/Button/Button';
@@ -27,45 +28,19 @@ describe('<Auth />', () => {
         wrapper.find('.testing2').simulate('click');
         expect(wrapper.state('isSignup')).toEqual(true);
     });
-
-    // HELP - not working corrctly - can't access state.controls.email/password.value
+    
+    // Working here!!
     it('Should submit onAuthHandler when form is submitted', () => {
         const wrapper = mount(<Auth /> );
         const spy =  jest.spyOn(wrapper.instance(), 'onAuthHandler');
-        wrapper.setState({
-            controls: {
-                email: {
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'email',
-                        placeholder: 'Your Email'
-                    },
-                    value: 'test@test.com',
-                    validation: {
-                        required: true,
-                        isEmail: true
-                    },
-                    valid: true,
-                    touched: true
-                },
-                password: {
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'password',
-                        placeholder: 'Your Password'
-                    },
-                    value: '123456',
-                    validation: {
-                        required: true,
-                        minLength: 6
-                    },
-                    valid: true,
-                    touched: true
+        wrapper.find('.testing1').simulate('submit', {
+            target: {
+                email: 'test@test.com', 
+                password: '123456'
                 }
-            }
-        })
-        wrapper.find('.testing1').simulate('click');
+            });
         expect(spy).toHaveBeenCalledTimes(1);
+
     });
 
     it('Should not submit onAuthhandler when form is submitted without data', () => {
