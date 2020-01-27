@@ -17,10 +17,10 @@ User Dashboard - Search Artist page| User Dashboard - Followed Artists page
 3.  Lastly I think this app could be fun for those who are just looking to have an easy way to purchase tickets via Songkick links for each search result.
 
 ### UI Flow
-![UI Flow handwritten draft](https://github.com/investment-simulator-full-stack-capstone/github-images/UI-user flow.jpg)
+![UI Flow handwritten draft](https://github.com/calorab/concertMonster-thinkful-client/blob/master/IMG_8197%202.HEIC)
 
 ### Wireframe _main
-![Wireframe _Main](https://github.com/investment-simulator-full-stack-capstone/github-images/UI-Wireframe.jpg)
+![Wireframe _Main](https://github.com/calorab/concertMonster-thinkful-client/blob/master/IMG_8197%202.HEIC)
 
 ## Working Prototype
 You can access a working prototype of the app here: [ConcertMonster - Beta]( --INSERT LINK TO CM HERE!!!!!!!!-- )
