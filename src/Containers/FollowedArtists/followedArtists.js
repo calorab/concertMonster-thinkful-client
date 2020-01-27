@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import MyArtistItem from '../../Components/MyArtistItem/myArtistItem';
 import axios from 'axios';
-import Button from '../../Components/UI/Button/Button';
 import Aux from '../hoc/Aux/Aux';
 import BackToTopButton from '../../Components/UI/BackToTopButton/backToTopButton';
 
@@ -28,11 +27,9 @@ class followedArtists extends Component {
             }
         })
         .then(response => {
-            // console.log('RESPONSE ', response);
             this.setState({
                 artists: response.data.artists,
             });
-            console.log(this.state.artists);
             if (this.state.artists.length > 5) {
                 this.setState({showScroll: true});
             }
@@ -40,12 +37,12 @@ class followedArtists extends Component {
         })
         .catch(err => {
             console.log(err);
+            return err;
         });
     };
 
     unfollowHandler = (artist, event) => {
         event.preventDefault();
-        console.log('START...');
         const url = 'http://localhost:8080/followedartists/deleteartist';
         fetch(url, {
             method: 'delete',
@@ -58,7 +55,6 @@ class followedArtists extends Component {
             })
         })
         .then(response => {
-            console.log('RESPONSE', response);
             return response;
         }).then(response => {
             if (response.ok) {
@@ -70,6 +66,7 @@ class followedArtists extends Component {
         })
         .catch(err => {
             console.log(err);
+            return err;
         });
     };
 
@@ -113,5 +110,4 @@ class followedArtists extends Component {
     
 };
 
-// btnClicked={event => this.onGetConcerts(event, element)}>
 export default followedArtists;

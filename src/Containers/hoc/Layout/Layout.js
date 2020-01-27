@@ -33,7 +33,6 @@ class Layout extends Component {
                     {this.props.children}
                 </main>
             </div>
-            // needs state for open/close sideDrawer and possibly show/hide navItem's
         );
     }
 };

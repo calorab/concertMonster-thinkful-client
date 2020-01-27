@@ -3,7 +3,6 @@ import {shallow, mount} from 'enzyme';
 import spyOn from 'spyon';
 
 import SearchArtists from './SearchArtists';
-import Input from '../../Components/UI/Input/Input';
 import Adapter from '../../setupTests';
 
 

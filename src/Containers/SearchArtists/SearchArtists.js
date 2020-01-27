@@ -2,42 +2,34 @@ import React, {Component} from 'react';
 import classes from './SearchArtists.module.css';
 
 import Button from '../../Components/UI/Button/Button';
-import Input from '../../Components/UI/Input/Input';
 import Spinner from '../../Components/UI/Spinner/Spinner';
 import BackToTopButton from '../../Components/UI/BackToTopButton/backToTopButton';
 
 import SearchResultItem from '../../Components/SearchResultItem/SearchResultItem';
 import axios from 'axios';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
 
 
 class SearchArtists extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            error: false,
-            loading: false,
-            artists: [],
-            showScroll: false,
-            searchValue: ''
-        };
-    
-        this.handleChange = this.handleChange.bind(this);
-        this.submitHandler = this.submitHandler.bind(this);
-    }
-
-    
+    state = {
+        error: false,
+        loading: false,
+        artists: [],
+        showScroll: false,
+        searchValue: ''
+    };
 
     handleChange(event) {
         this.setState({searchValue: event.target.value});
     };
-
-    submitHandler = () => {
+ 
+    submitHandler = (event) => {
         this.setState({loading: true, showScroll: false});
-        const artist = this.state.searchValue;
+        const artist = event.target.search.value;
         const url = 'http://localhost:8080/search/artists/' + encodeURIComponent(artist);
-        console.log('URL and Artist:', url, artist);
         axios.request({
                 method: 'get',
                 url: url
@@ -49,20 +41,19 @@ class SearchArtists extends Component {
                 artists: response.data.results.artist
             });  
         })
-        .then(data => console.log('This is the artist state:', this.state.artists))
         .catch(err => {
             console.log(err);
             this.setState({
                 loading: false,
                 error: err
             });
+            return err;
         });
     };
 
     onAddArtist = (event, artist) => {
         this.setState({loading: true});
         let apiEndpoint = 'http://localhost:8080/followedartists/myartist';
-        console.log(artist);
         fetch(apiEndpoint, {
             method: 'post',
             headers: {
@@ -76,36 +67,43 @@ class SearchArtists extends Component {
             })
         })
         .then(response => {
-            console.log('RESPONSE', response);
             this.setState({loading: false});
             return response.json();
         })
         .then(data => {
-            console.log('DATA', data);
             return data;
         })
         .catch(err => {
             console.log(err);
             this.setState({error: true});
+            return err;
         });
     };
     
     render() {
 
         let searchForm =
-            <form className={classes.SearchArtists} onSubmit={(event) => this.submitHandler(event)}>
-                <Input 
-                    className='testing3' 
-                    inputValue={this.state.searchValue} 
-                    startValue='Search Artist' 
-                    changed={this.handleChange}/>
-                <Button 
-                    btnType="Success">
-                    SEARCH
-                </Button>
-                
-            </form>
-        ;
+            <Formik
+                initialValues={{search: ''}}
+                validationSchema={Yup.object({
+                search: Yup.string()
+                    .required('Required')
+                })}
+                onSubmit={({ setSubmitting }) => {
+                    this.submitHandler();
+                }}>
+                <Form  onSubmit={this.submitHandler} >
+                    <Field name="search" type="text" className={classes.SearchElement} placeholder='Alison Wonderland' />
+                    <ErrorMessage name="search" />
+                    <br></br>
+                    <Button 
+                        className='testing1' 
+                        btnType='Success'
+                        type='submit'>
+                        SEARCH
+                    </Button>
+                </Form>
+            </Formik>;
  
         let searchResultsArray = [];
         for (const searchElement of this.state.artists) {
@@ -138,7 +136,9 @@ class SearchArtists extends Component {
         return (
             <div>
                 <h3>Search for Artists Below</h3>
-                {searchForm}
+                <div className={classes.SearchArtists}>
+                    {searchForm}
+                </div>
                 {searchResults}
                 {this.state.showScroll ? <BackToTopButton clicked={() => window.scrollTo(0,0)} />: null}
             </div>

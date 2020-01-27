@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Redirect} from 'react-router-dom';
+import classes from './Welcome.module.css';
 
 import Button from '../../Components/UI/Button/Button';
 
@@ -30,7 +30,8 @@ export class Welcome extends Component {
         return (
             <div>
                 <h1>Welcome to Concert Monster!</h1>
-                <p>Thanks for checking out my app! I have been a music lover for as long as I can remember 
+
+                <p className={classes.Paragraph} >Thanks for checking out my app! I have been a music lover for as long as I can remember 
                     and going to concerts has been one of my favorite things to do! ConcertMonster will 
                     help you search for artists or bands that you like, follow them and get information 
                     on when they are touring - all using the SongKick API. Click the <strong>Get Started</strong> button 

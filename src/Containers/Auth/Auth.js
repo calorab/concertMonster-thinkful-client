@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
 import Spinner from '../../Components/UI/Spinner/Spinner';
 import Aux from '../../Containers/hoc/Aux/Aux';
-import { Formik, Field, Form, ErrorMessage, withFormik } from 'formik';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 
@@ -43,22 +42,14 @@ class Login extends Component {
             })
         })
         .then(response => {
-            // if (response.status !== 200) {
-            //     console.log('status error');
-            //     const error = new Error(response.message);
-            //     throw error;
-            // }
-            console.log('RESPONSE', response);
             return response.json();
         })
         .then(data => {
-            console.log(data);
             if (data.message) {
                 throw new Error(data.message);
             }
             sessionStorage.setItem('token', data.token);
             sessionStorage.setItem('userId', data.userId);
-            console.log(sessionStorage);
             this.props.history.push('/dashboard');
         })
         .catch(err => {
@@ -68,7 +59,6 @@ class Login extends Component {
     };
 
     switchAuthModeHandler = () => {
-        console.log('state switched');
         this.setState(prevState => {
             return {isSignup: !prevState.isSignup}
         });
@@ -87,15 +77,15 @@ class Login extends Component {
                     .min(5, 'Too short - minimum 5 characters!')
                     .required('Required')
                 })}
-                onSubmit={({ setSubmitting }) => {
-                    // withFormik({mapPropsToValues: }) 
+                onSubmit={({ setSubmitting }) => { 
                     this.onAuthHandler();
                 }}>
                 <Form className='testing' onSubmit={this.onAuthHandler} >
                     <Field name="email" type="email" className={classes.InputElement} placeholder='Your Email' />
                     <ErrorMessage name="email" />
-                    <Field name="password" type="text" className={classes.InputElement2} placeholder='Your Password' />
+                    <Field name="password" type="" className={classes.InputElement2} placeholder='Your Password' />
                     <ErrorMessage name="password" />
+                    <br></br>
                     <Button 
                         className='testing1' 
                         btnType='Success'
@@ -109,10 +99,6 @@ class Login extends Component {
         if (this.state.loading) {
             form = <Spinner />;
         }
-        let errorMessage;
-        if (this.state.error) {
-            errorMessage = <p>{this.state.error.toString()}</p>
-        }
 
         return (
             <Aux >
@@ -121,7 +107,6 @@ class Login extends Component {
                 </div>
                 <div className={classes.Auth}>
                     {form} 
-                    {errorMessage}
                 </div>
                 <Button className='testing2' btnType='Danger' 
                     clicked={this.switchAuthModeHandler}>

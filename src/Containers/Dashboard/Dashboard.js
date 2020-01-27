@@ -3,7 +3,6 @@ import SearchArtists from '../SearchArtists/SearchArtists';
 import FollowedArtists from '../FollowedArtists/followedArtists';
 import Aux from '../hoc/Aux/Aux';
 import classes from './Dashboard.module.css';
-// import {Redirect, Link} from 'react-router-dom';
 import Button from '../../Components/UI/Button/Button';
 
 
@@ -12,7 +11,7 @@ class Dashboard extends Component {
     state = {
         showArtists: false
     }
-//testing option
+
     componentDidMount = () => {
         if (!sessionStorage.getItem('token') && this.props.history) {
             this.props.history.push('/auth');
@@ -20,7 +19,6 @@ class Dashboard extends Component {
     };
     
     toggleMyArtists = () => {
-        console.log('showArtists just switched');
         this.setState(prevState => {
             return {showArtists: !prevState.showArtists}
         });
@@ -31,7 +29,6 @@ class Dashboard extends Component {
     };
 
     render(props) {
-        console.log(this.state);
         let display = 
             <div>
                 <SearchArtists clicked={this.toggleMyArtists} />   

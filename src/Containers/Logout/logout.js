@@ -5,7 +5,6 @@ class Logout extends Component {
 
     componentDidMount () {
         sessionStorage.removeItem('token');
-        sessionStorage.removeItem('expirationDate');
         sessionStorage.removeItem('userId');
     }
 
