@@ -11,13 +11,11 @@ export class Welcome extends Component {
 
     componentDidMount = () => {
         if (sessionStorage.getItem('token')) {
-            // this.props.history.push('/dashboard');
             this.setState({token: true});
         } 
     };
 
     getStartedHandler = () => {
-        // console.log(this.state);
         if (this.state.token) {
             this.props.history.push('/dashboard');
         }
