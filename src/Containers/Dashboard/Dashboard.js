@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import SearchArtists from '../SearchArtists/SearchArtists';
 import FollowedArtists from '../FollowedArtists/followedArtists';
 import Aux from '../hoc/Aux/Aux';
+import classes from './Dashboard.module.css';
 // import {Redirect, Link} from 'react-router-dom';
 import Button from '../../Components/UI/Button/Button';
 
@@ -25,6 +26,10 @@ class Dashboard extends Component {
         });
     }
 
+    handleLogout = () => {
+        this.props.history.push('/logout');
+    };
+
     render(props) {
         console.log(this.state);
         let display = 
@@ -38,9 +43,13 @@ class Dashboard extends Component {
                     <FollowedArtists />
                 </div>;
         }
-
+        
         return (
             <Aux>
+                <div className={classes.Logout}>
+                    <Button btnType="Danger" clicked={this.handleLogout} >Logout</Button>
+                </div>
+                
                 {!this.state.showArtists ? 
                     <Button btnType="Success" 
                         clicked={this.toggleMyArtists}>
