@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow, mount} from 'enzyme';
-import spyOn from 'spyon';
+import {Field} from 'formik';
 
 import SearchArtists from './SearchArtists';
 import Adapter from '../../setupTests';
@@ -16,13 +16,5 @@ describe('<SearchArtists />', () => {
         const wrapper = mount(<SearchArtists submitHandler={callback}/> );
         wrapper.find('.testing3').simulate('click');
         expect(callback).toHaveBeenCalledTimes(0);
-    });
-    
-    it('Should call submitHandler when search submitted', () => {
-        const wrapper = mount(<SearchArtists /> );
-        const spy =  jest.spyOn(wrapper.instance(), 'submitHandler');
-        wrapper.setState({searchValue: 'alison'});
-        wrapper.find('.testing3').simulate('submit');
-        expect(spy).toHaveBeenCalledTimes(1);
     });
 });

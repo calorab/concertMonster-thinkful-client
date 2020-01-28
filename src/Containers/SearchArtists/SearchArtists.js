@@ -18,12 +18,7 @@ class SearchArtists extends Component {
         error: false,
         loading: false,
         artists: [],
-        showScroll: false,
-        searchValue: ''
-    };
-
-    handleChange(event) {
-        this.setState({searchValue: event.target.value});
+        showScroll: false
     };
  
     submitHandler = (event) => {
@@ -97,7 +92,7 @@ class SearchArtists extends Component {
                     <ErrorMessage name="search" />
                     <br></br>
                     <Button 
-                        className='testing1' 
+                        className='testing3' 
                         btnType='Success'
                         type='submit'>
                         SEARCH

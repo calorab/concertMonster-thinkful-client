@@ -28,20 +28,6 @@ describe('<Auth />', () => {
         wrapper.find('.testing2').simulate('click');
         expect(wrapper.state('isSignup')).toEqual(true);
     });
-    
-    // Working here!!
-    it('Should submit onAuthHandler when form is submitted', () => {
-        const wrapper = mount(<Auth /> );
-        const spy =  jest.spyOn(wrapper.instance(), 'onAuthHandler');
-        wrapper.find('.testing1').simulate('submit', {
-            target: {
-                email: 'test@test.com', 
-                password: '123456'
-                }
-            });
-        expect(spy).toHaveBeenCalledTimes(1);
-
-    });
 
     it('Should not submit onAuthhandler when form is submitted without data', () => {
         const callback = jest.fn();
