@@ -46,6 +46,7 @@ class Login extends Component {
         })
         .then(data => {
             if (data.message) {
+                this.setState({error: data.message});
                 throw new Error(data.message);
             }
             sessionStorage.setItem('token', data.token);
@@ -54,7 +55,7 @@ class Login extends Component {
         })
         .catch(err => {
             console.log(err);
-            this.setState({error: err});
+            return err;
         });
     };
 
@@ -107,6 +108,7 @@ class Login extends Component {
                 </div>
                 <div className={classes.Auth}>
                     {form} 
+                    {this.state.error ? <p>{this.state.error}</p> : null}
                 </div>
                 <Button className='testing2' btnType='Danger' 
                     clicked={this.switchAuthModeHandler}>
