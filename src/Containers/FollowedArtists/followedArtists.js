@@ -17,7 +17,7 @@ class followedArtists extends Component {
     };
 
     getMyArtistsHandler = () => {
-        const url = 'http://localhost:8080/followedartists/myartists';
+        const url = 'https://concertmonster.herokuapp.com/followedartists/myartists';
         const token = sessionStorage.getItem('token');
         axios.request({
             method: 'get',
@@ -43,7 +43,7 @@ class followedArtists extends Component {
 
     unfollowHandler = (artist, event) => {
         event.preventDefault();
-        const url = 'http://localhost:8080/followedartists/deleteartist';
+        const url = 'https://concertmonster.herokuapp.com/followedartists/deleteartist';
         fetch(url, {
             method: 'delete',
             headers: {

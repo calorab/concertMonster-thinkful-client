@@ -24,7 +24,7 @@ class SearchArtists extends Component {
     submitHandler = (event) => {
         this.setState({loading: true, showScroll: false});
         const artist = event.target.search.value;
-        const url = 'http://localhost:8080/search/artists/' + encodeURIComponent(artist);
+        const url = 'https://concertmonster.herokuapp.com/search/artists/' + encodeURIComponent(artist);
         axios.request({
                 method: 'get',
                 url: url
@@ -48,7 +48,7 @@ class SearchArtists extends Component {
 
     onAddArtist = (event, artist) => {
         this.setState({loading: true});
-        let apiEndpoint = 'http://localhost:8080/followedartists/myartist';
+        let apiEndpoint = 'https://concertmonster.herokuapp.com/followedartists/myartist';
         fetch(apiEndpoint, {
             method: 'post',
             headers: {
